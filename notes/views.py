@@ -17,7 +17,7 @@ class NotesListView(ListView):
 
 class NotesDetailView(DetailView):
     model = Note
-    template_name = 'notes/notes_detail.html'
+    template_name = 'notes/note_view.html'
 
     def get_context_data(self, *args, **kwargs):
         context = super(NotesDetailView, self).get_context_data(**kwargs)
