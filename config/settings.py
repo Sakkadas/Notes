@@ -23,8 +23,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # LOCAL_APPS
-
+    'notes'
     # THIRD-PARTY APPS
+    'crispy_forms',
+    'ckeditor',
+
 ]
 
 MIDDLEWARE = [
@@ -94,5 +97,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
