@@ -21,7 +21,7 @@ def profile(request):
             u_form.save()
             p_form.save()
             messages.success(request, f'Your account has been updated!')
-            return redirect('profile')
+            return redirect('accounts:profile')
 
     else:
         u_form = UserUpdateForm(instance=request.user)
@@ -32,13 +32,13 @@ def profile(request):
         'p_form': p_form
     }
 
-    return render(request, 'notes/users/profile.html', context)
+    return render(request, 'users/profile.html', context)
 
 
 class UserRegisterView(FormView, UserRegisterForm):
-    template_name = 'articles/registration/registration.html'
+    template_name = 'users/registration.html'
     form_class = UserRegisterForm
-    success_url = reverse_lazy('articles')
+    success_url = reverse_lazy('notes:notes')
 
     def form_valid(self, form):
         user = form.save()
@@ -49,15 +49,15 @@ class UserRegisterView(FormView, UserRegisterForm):
 
     def get(self, *args, **kwargs):
         if self.request.user.is_authenticated:
-            return redirect('articles')
+            return redirect('notes:notes')
         else:
             return super(UserRegisterView, self).get(*args, **kwargs)
 
 
 class UserLoginView(LoginView):
-    template_name = 'articles/registration/login.html'
+    template_name = 'users/login.html'
     fields = "__all__"
     redirect_authenticated_user = True
 
     def get_success_url(self):
-        return reverse_lazy('articles')
+        return reverse_lazy('notes:notes')
