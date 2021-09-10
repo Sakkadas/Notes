@@ -1,6 +1,8 @@
 from django.contrib import admin
 from .models import *
 
+from mptt.admin import MPTTModelAdmin
+
 
 class NoteAdmin(admin.ModelAdmin):
     list_display = ['title', 'created']
@@ -8,3 +10,5 @@ class NoteAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Note, NoteAdmin)
+
+admin.site.register(Comment, MPTTModelAdmin)
