@@ -25,12 +25,13 @@ INSTALLED_APPS = [
     # LOCAL_APPS
     'notes',
     'users',
+    'tags',
+
     # THIRD-PARTY APPS
     'crispy_forms',
     'ckeditor',
     'widget_tweaks',
-
-
+    'taggit',
 ]
 
 MIDDLEWARE = [
