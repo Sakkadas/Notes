@@ -11,5 +11,8 @@ urlpatterns = [
     path("create/", NoteCreateView.as_view(), name='create'),
     path("delete/<str:slug>/", NoteDeleteView.as_view(), name='delete'),
     path("update/<str:slug>/", NoteUpdateView.as_view(), name='update'),
-    # -------------------------------------------------------    
+    # -------------------------------------------------------
+
+    path('tag/<str:tag_slug>/', TaggedNoteListView.as_view(), name='tagged'),
+
 ]
