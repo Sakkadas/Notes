@@ -1,6 +1,10 @@
 from django.db import models
 from ckeditor.fields import RichTextField
 from PIL import Image
+from django.utils.text import slugify
+
+from taggit.managers import TaggableManager
+from tags.models import UnicodeTaggedItem
 
 
 class Note(models.Model):
@@ -17,6 +21,15 @@ class Note(models.Model):
                              help_text='If you want, put here your source link')
     anonymous = models.BooleanField(
         default=False, help_text='Others won\'t see that the note is yours.')
+    tags = TaggableManager(
+        through=UnicodeTaggedItem, blank=True,
+        help_text='''Add tags. Separate tags by using "Enter" or comma.
+           You can add maximum 5 tags, and length of tags should be less than 25
+           symbols.''')
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Note, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.title
