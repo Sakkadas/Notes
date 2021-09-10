@@ -1,10 +1,12 @@
 from django.shortcuts import redirect, render, get_object_or_404
+from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse_lazy, reverse
 
-
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
+
+from taggit.models import Tag
 
 from .models import *
 from .forms import *
@@ -53,3 +55,22 @@ class NoteDeleteView(DeleteView):
     template_name = 'notes/note_delete.html'
     success_url = reverse_lazy('notes:notes')
     context_object_name = 'note'
+
+
+class TaggedNoteListView(NotesListView):
+    template_name = 'tags/tagged_list.html'
+
+    def get_queryset(self):
+        if 'tag_slug' in self.kwargs:
+            slug = self.kwargs['tag_slug']
+            tag = get_object_or_404(Tag, slug=slug)
+            setattr(self, 'tag', tag)
+        else:
+            raise Http404('The tag slug wasn\'t found.')
+        queryset = Note.objects.filter(tags=tag)
+        return queryset
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tag'] = self.tag
+        return context
