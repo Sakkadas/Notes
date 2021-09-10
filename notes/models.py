@@ -4,9 +4,10 @@ from PIL import Image
 from django.utils.text import slugify
 from django.contrib.auth.models import User
 
-
 from taggit.managers import TaggableManager
 from tags.models import UnicodeTaggedItem
+
+from mptt.models import MPTTModel, TreeForeignKey
 
 
 class Note(models.Model):
@@ -39,3 +40,18 @@ class Note(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Comment(MPTTModel):
+    note = models.ForeignKey(Note, on_delete=models.CASCADE, related_name='comments', null=True, blank=True)
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+    text = models.TextField(max_length=3000, null=False, blank=False, verbose_name='Comment')
+    email = models.EmailField(blank=True)
+    publish = models.DateTimeField(auto_now_add=True)
+    status = models.BooleanField(default=True)
+
+    class MPTTMeta:
+        order_insertion_by = ['publish']
+
+    def __str__(self):
+        return self.text

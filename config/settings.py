@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'widget_tweaks',
     'taggit',
+    'mptt',
 ]
 
 MIDDLEWARE = [
