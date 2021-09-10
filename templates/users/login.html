@@ -34,6 +34,10 @@
     </div>
 
     <div class="auth-buttons">
+        <a href="{% url 'social:begin' 'facebook' %}" class="bi bi-facebook btn btn-facebook "
+           style="color: #ffffff; background-color: #1877f2; font-size: 20px; border-radius: 10px">
+            Login with Facebook</a>
+        <small class="text-muted">
             <p>Need An Account? <a class="ml-2" href="{% url 'accounts:register' %}">Sign Up Now</a></p>
             <p><a href="{% url 'accounts:password_reset' %}">Forgot Password?</a></p>
         </small>
