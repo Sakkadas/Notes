@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # LOCAL_APPS
     'notes',
+    'users',
     # THIRD-PARTY APPS
     'crispy_forms',
     'ckeditor',
