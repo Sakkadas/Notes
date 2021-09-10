@@ -1,0 +1,44 @@
+{% extends 'layouts/base.html' %}
+
+{% load static %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+
+
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+{% if next %}
+{% if user.is_authenticated %}
+<p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+{% else %}
+<p>Please login to see this page.</p>
+{% endif %}
+{% endif %}
+
+<form class="form-login" method="post" action="{% url 'accounts:login' %}">
+    {% csrf_token %}
+    <div class="boss-wrapper">
+        <div class="input-wrapper">
+            {% render_field form.username placeholder="Username:" %}
+            {% render_field form.password id="password" placeholder="Password:" %}
+            <div class="input-icon" id="icon" onclick="togglePassword()">
+                <img width="25px" src="{% static 'images/icons/eye_icon.svg' %}">
+            </div>
+            <input id="login-button" class="btn btn-primary" type="submit" value="Login">
+        </div>
+    </div>
+
+    <div class="auth-buttons">
+            <p>Need An Account? <a class="ml-2" href="{% url 'accounts:register' %}">Sign Up Now</a></p>
+            <p><a href="{% url 'accounts:password_reset' %}">Forgot Password?</a></p>
+        </small>
+    </div>
+
+</form>
+
+{% endblock content %} 
