@@ -8,7 +8,13 @@
     <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'notes:update' note.slug %}">Edit</a>
     <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'notes:delete' note.slug %}">Delete</a>
     {{ note.text|safe }}
+    {% for tag in note.tags.all %}
+    <span>{{tag}}</span>
     {% endfor %}
+    {% endfor %}
+        <!--- Tags Section -->
+        herre
+    
 </div>
 
 {% endblock content %}
