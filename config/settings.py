@@ -28,6 +28,8 @@ INSTALLED_APPS = [
     # THIRD-PARTY APPS
     'crispy_forms',
     'ckeditor',
+    'widget_tweaks',
+
 
 ]
 
@@ -104,3 +106,8 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# Redirection
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = ''
