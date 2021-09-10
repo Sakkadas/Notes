@@ -1,0 +1,26 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+ <form action="{% url 'notes:like' note.slug %}" method="POST">
+
+        {% csrf_token %}
+        {% if user.is_authenticated %}
+
+        {% if liked %}
+        <button type="submit" name="post_slug" value="{{ note.slug }}" class="btn btn-primary btn-sm">Unlike</button>
+        {% else %}
+        <button type="submit" name="post_slug" value="{{ note.slug }}" class="btn btn-primary btn-sm"><i
+                class="bi bi-hand-thumbs-up-fill"
+                style="font-size: 1rem; color: cornflowerblue;"></i>Like
+        </button>
+
+        {% endif %}
+
+        {% else %}
+        <small>
+            <a href="{% url 'accounts:login' %}">Login</a> to like
+        </small>
+
+        {% endif %}
+        {{total_likes}} Likes
+</form>
+{% endblock content %}
