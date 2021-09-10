@@ -14,5 +14,6 @@ urlpatterns = [
     # -------------------------------------------------------
 
     path('tag/<str:tag_slug>/', TaggedNoteListView.as_view(), name='tagged'),
+    path("like/<str:slug>/", LikeView, name='like'),
 
 ]

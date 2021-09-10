@@ -22,12 +22,38 @@ class NotesListView(ListView):
 class NoteDetailView(DetailView):
     model = Note
     template_name = 'notes/note_view.html'
-    context_object_name = 'note'
 
     def get_context_data(self, *args, **kwargs):
         context = super(NoteDetailView, self).get_context_data(**kwargs)
         note = get_object_or_404(Note, slug=self.kwargs['slug'])
+
+        like_func = get_object_or_404(Note, slug=self.kwargs['slug'])
+        total_likes = like_func.total_likes()
+
+        liked = False
+        if like_func.likes.filter(id=self.request.user.id).exists():
+            liked = True
+
         context['note'] = note
+        context['total_likes'] = total_likes
+        context['liked'] = liked
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('notes:note', kwargs={'slug': self.object.slug})
+
+
+def LikeView(request, slug):
+    article = get_object_or_404(Note, slug=request.POST.get('post_slug'))
+    liked = False
+    if article.likes.filter(id=request.user.id).exists():
+        article.likes.remove(request.user)
+        liked = False
+    else:
+        article.likes.add(request.user)
+        liked = True
+
+    return HttpResponseRedirect(reverse('notes:note', args=[str(slug)]))
 
 
 class NoteCreateView(CreateView):
