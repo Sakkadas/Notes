@@ -85,7 +85,8 @@
     <div>
         {% recursetree comments %}
         <div id="{{ node.id }}" class="my-2 p-2">
-            <div class="d-flex justify-content-between">By {{ node.author }}
+            <div class="d-flex justify-content-between"><strong>
+            By {{ node.author|title|default_if_none:'Deleted User' }}</strong>
                 <div>{{ node.publish }}</div>
             </div>
             <div>{{ node.text }}</div>

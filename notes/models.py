@@ -44,6 +44,7 @@ class Note(models.Model):
 
 class Comment(MPTTModel):
     note = models.ForeignKey(Note, on_delete=models.CASCADE, related_name='comments', null=True, blank=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
     text = models.TextField(max_length=3000, null=False, blank=False, verbose_name='Comment')
     email = models.EmailField(blank=True)
