@@ -17,6 +17,8 @@ class NotesListView(ListView):
     context_object_name = 'notes'
     template_name = 'notes/notes_list.html'
     success_url = reverse_lazy('notes:notes')
+    paginate_by = 6
+
 
     def get_order(self):
         order = self.request.GET.get('order', '-created')
@@ -27,6 +29,7 @@ class NotesListView(ListView):
 
 class PersonalNotesList(NotesListView):
     template_name = 'notes/personal_notes.html'
+    paginate_by = 6
 
     def get_queryset(self):
         queryset = Note.feature.get_personal_notes(self.request.user)
