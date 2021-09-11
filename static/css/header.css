@@ -1,0 +1,32 @@
+#banner {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+}
+
+#banner.img-fluid {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    -o-box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+}
+
+.banner-container {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+
+.img-text-centered {
+    color: #f1edf5;
+    position: absolute;
+    top: 50%;
+    left: 52%;
+    transform: translate(-50%, -50%);
+}
+
+.logo-banner-section {
+    font-size: 40px;
+    float: left;
+}
