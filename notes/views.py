@@ -18,6 +18,21 @@ class NotesListView(ListView):
     template_name = 'notes/notes_list.html'
     success_url = reverse_lazy('notes:notes')
 
+    def get_order(self):
+        order = self.request.GET.get('order', '-created')
+        if order.replace('-', '', 1) == 'created':
+            return order
+        return '-created'
+
+
+class PersonalNotesList(NotesListView):
+    template_name = 'notes/personal_notes.html'
+
+    def get_queryset(self):
+        queryset = Note.feature.get_personal_notes(self.request.user)
+        order = self.get_order()
+        return queryset.order_by(order)
+
 
 class NoteDetailView(FormMixin, DetailView):
     model = Note

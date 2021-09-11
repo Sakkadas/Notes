@@ -12,7 +12,8 @@ urlpatterns = [
     path("delete/<str:slug>/", NoteDeleteView.as_view(), name='delete'),
     path("update/<str:slug>/", NoteUpdateView.as_view(), name='update'),
     # -------------------------------------------------------
-
+    
+    path('personal/', PersonalNotesList.as_view(), name='personal'),
     path('tag/<str:tag_slug>/', TaggedNoteListView.as_view(), name='tagged'),
     path("like/<str:slug>/", LikeView, name='like'),
 

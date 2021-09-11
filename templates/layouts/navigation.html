@@ -4,8 +4,9 @@
     {% if request.user.is_authenticated %}
     <a class="nav-link" href="{% url 'notes:create' %}">Create Note</a>
     <a class="nav-link active" aria-current="page" href="{% url 'tags:tags' %}">Tags</a>
+    <a href="{% url 'notes:personal' %}">Personal Notes</a>
     <a class="nav-link" href="{% url 'accounts:profile' %}">Profile</a>
-    <a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a>
+    <a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a>       
     {% else %}
     <a class="nav-link" href="{% url 'accounts:register' %}">Register</a>
     <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>

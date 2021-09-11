@@ -10,7 +10,13 @@ from tags.models import UnicodeTaggedItem
 from mptt.models import MPTTModel, TreeForeignKey
 
 
+class NotesManager(models.Manager):
+
+    def get_personal_notes(self, user):
+        return self.filter(author=user)
+
 class Note(models.Model):
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, editable=False, related_name='author')
     title = models.CharField(max_length=100, null=False, blank=False)
     text = RichTextField(blank=True, null=True)
     summary = models.CharField(max_length=100, default='', blank=True,
@@ -41,12 +47,17 @@ class Note(models.Model):
     def __str__(self):
         return self.title
 
+    feature = NotesManager()
+
 
 class Comment(MPTTModel):
-    note = models.ForeignKey(Note, on_delete=models.CASCADE, related_name='comments', null=True, blank=True)
+    note = models.ForeignKey(
+    Note, on_delete=models.CASCADE, related_name='comments', null=True, blank=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
-    text = models.TextField(max_length=3000, null=False, blank=False, verbose_name='Comment')
+    parent = TreeForeignKey('self', on_delete=models.CASCADE,
+                            null=True, blank=True, related_name='children')
+    text = models.TextField(max_length=3000, null=False,
+                            blank=False, verbose_name='Comment')
     email = models.EmailField(blank=True)
     publish = models.DateTimeField(auto_now_add=True)
     status = models.BooleanField(default=True)
