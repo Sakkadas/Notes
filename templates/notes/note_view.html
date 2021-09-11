@@ -1,26 +1,147 @@
 {% extends 'layouts/base.html' %}
-{% block content %}
- <form action="{% url 'notes:like' note.slug %}" method="POST">
 
+{% block content %}
+
+<br/>
+<style>
+    @media screen and (min-width: 600px) {
+        .children form {
+            margin-left: -48px;
+        }
+
+        .children .children form {
+            margin-left: -96px;
+        }
+    }
+
+    #myForm {
+        width: 70%;
+        align-content: center;
+        flex: auto;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 50px;
+    }
+</style>
+
+<div class="container">
+  <div class="row justify-content-md-center pt-5">
+
+    <div class="col-md-7">
+      <h1>{{note.title}}</h1>
+    </div>
+    <div class="col-md-9"><img class="card-img-top" src="{#note.image.url#}" alt="{{ note.title }}"></div>
+    <div class="col-md-7">
+      <p>{{note.content|safe}}</p>
+    </div>
+    <div class="col-md-7">
+
+
+<article class="media content-section">
+    <img class="rounded-circle article-img" src={{ note.author.profile.image.url }}>
+    <div class="media-body">
+        <div class="article-metadata">
+            <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+            {% if object.author == user %}
+            <div>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'update' note.slug %}">Edit</a>
+                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'delete' note.slug %}">Delete</a>
+            </div>
+            {% endif %}
+        </div>
+        <h2 class="article-title">{{ note.title }}</h2>
+        <p class="article-content">{{ note.text | safe}}</p>
+        </div>
+
+         <form action="{% url 'notes:like' note.slug %}" method="POST">
         {% csrf_token %}
         {% if user.is_authenticated %}
-
         {% if liked %}
-        <button type="submit" name="post_slug" value="{{ note.slug }}" class="btn btn-primary btn-sm">Unlike</button>
+                <button type="submit" name="post_slug" value="{{ note.slug }}" class="btn btn-primary btn-sm">Unlike</button>
         {% else %}
-        <button type="submit" name="post_slug" value="{{ note.slug }}" class="btn btn-primary btn-sm"><i
-                class="bi bi-hand-thumbs-up-fill"
-                style="font-size: 1rem; color: cornflowerblue;"></i>Like
-        </button>
-
+                <button type="submit" name="post_slug" value="{{ note.slug }}" class="btn btn-primary btn-sm"><i
+                        class="bi bi-hand-thumbs-up-fill"
+                        style="font-size: 1rem; color: cornflowerblue;"></i>Like
+                </button>
         {% endif %}
-
         {% else %}
-        <small>
-            <a href="{% url 'accounts:login' %}">Login</a> to like
-        </small>
-
+                <small>
+                <a href="{% url 'accounts:login' %}">Login</a> to like
+                </small>
         {% endif %}
         {{total_likes}} Likes
 </form>
+</article>
+
+<hr>
+<br>
+{% with comments.count  as total_comments %}
+<h2>
+{{total_comments}} comments {{total_comment|pluralize:"s"}}
+</h2>
+{% endwith %}
+
+{% load mptt_tags %}
+    <div>
+        {% recursetree comments %}
+        <div id="{{ node.id }}" class="my-2 p-2">
+            <div class="d-flex justify-content-between">By {{ node.author }}
+                <div>{{ node.publish }}</div>
+            </div>
+            <div>{{ node.text }}</div>
+            {% if node.level < 3 %}
+            <button class="button" onclick="myFunction({{ node.id }})">Reply</button>
+            {% endif %}
+        </div>  
+           {% if not node.is_leaf_node %}
+                <ul class="children">
+                    {{ children }}
+                    </ul>
+           {% endif %}
+        {% endrecursetree %}
+    </div>
+      
+      <div style="display:block;">
+        <form id="myForm" method="POST">
+          <h2>Create new comment</h2>
+          {{ comment_form.as_p }}
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<script>
+    function formExit() {
+        document.getElementById("newForm").remove();
+    }
+
+    function myFunction(id) {
+        if (document.contains(document.getElementById("newForm"))) {
+            document.getElementById("newForm").remove();
+        }
+
+        var d1 = document.getElementById(id);
+        d1.insertAdjacentHTML('afterend',
+            '<form id="newForm" class="form-insert py-2" method="post"> \
+                      <div class="d-flex justify-content-between"><h2>Reply:</h2><div><button type="button" class="btn btn-outline-secondary" onclick="formExit()"">Close</button></div></div> \
+                      <select name="parent" class="d-none" id="id_parentt"> \
+                      <option value="' + id + '" selected="' + id + '"></option> \
+                </select> \
+                <label for="id_content">Comment:</label> \
+                <textarea name="content" cols="40" rows="5" class="form-control" required id="id_content"></textarea> \
+                {% csrf_token %} \
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button> \
+              </form>');
+
+        // document.querySelector('#id_parentt [value="' + id + '"]').selected = true;
+    }
+
+    $('#myForm').trigger("reset");
+</script>
+
 {% endblock content %}
