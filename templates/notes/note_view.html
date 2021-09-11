@@ -74,7 +74,14 @@
 </article>
 
 <hr>
+<!--TAGS-->
+    {% for tag in note.tags.all %}
+    <span class="badge tag-badge ms-1 mb-1" style="color:black; ">{{tag}}</span>
+    {% endfor %}
+
 <br>
+<br>
+
 {% with comments.count  as total_comments %}
 <h2>
 {{total_comments}} comments {{total_comment|pluralize:"s"}}

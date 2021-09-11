@@ -46,7 +46,7 @@ class NoteDetailView(FormMixin, DetailView):
 
     def get_success_url(self):
         return reverse_lazy('notes:note', kwargs={'slug': self.object.slug})
-    
+
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         form = self.get_form()

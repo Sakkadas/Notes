@@ -7,7 +7,7 @@ from taggit.models import Tag
 class TagList(ListView):
     model = Tag
     context_object_name = 'tags'
-    template_name = 'notes/tag_list.html'
+    template_name = 'tags/tags_list.html'
 
     def get_queryset(self):
         queryset = Tag.objects.all()
