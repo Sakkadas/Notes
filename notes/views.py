@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse_lazy, reverse
 
-from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView, FormMixin
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
@@ -19,9 +19,10 @@ class NotesListView(ListView):
     success_url = reverse_lazy('notes:notes')
 
 
-class NoteDetailView(DetailView):
+class NoteDetailView(FormMixin, DetailView):
     model = Note
     template_name = 'notes/note_view.html'
+    form_class = NewCommentForm
 
     def get_context_data(self, *args, **kwargs):
         context = super(NoteDetailView, self).get_context_data(**kwargs)
@@ -30,17 +31,35 @@ class NoteDetailView(DetailView):
         like_func = get_object_or_404(Note, slug=self.kwargs['slug'])
         total_likes = like_func.total_likes()
 
+        comments = note.comments.filter(status=True)
+        comment_form = NewCommentForm(initial={'notes:note': self.object})
+
         liked = False
         if like_func.likes.filter(id=self.request.user.id).exists():
             liked = True
 
-        context['note'] = note
+        context['comments'] = comments
+        context['comment_form'] = comment_form
         context['total_likes'] = total_likes
         context['liked'] = liked
         return context
 
     def get_success_url(self):
         return reverse_lazy('notes:note', kwargs={'slug': self.object.slug})
+    
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form, **kwargs):
+        form.instance.author = self.request.user
+        form.instance.note = self.object
+        form.save()
+        return super().form_valid(form)
 
 
 def LikeView(request, slug):
