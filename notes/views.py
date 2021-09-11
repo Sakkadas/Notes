@@ -16,7 +16,6 @@ class NotesListView(ListView):
     model = Note
     context_object_name = 'notes'
     template_name = 'notes/notes_list.html'
-    success_url = reverse_lazy('notes:notes')
     paginate_by = 6
 
 

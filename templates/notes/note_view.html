@@ -44,8 +44,8 @@
             <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
             {% if object.author == user %}
             <div>
-                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'update' note.slug %}">Edit</a>
-                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'delete' note.slug %}">Delete</a>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'notes:update' note.slug %}">Edit</a>
+                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'notes:delete' note.slug %}">Delete</a>
             </div>
             {% endif %}
         </div>
