@@ -20,18 +20,17 @@
 {% endif %}
 {% endif %}
 
+    <div class="container-login">
 <form class="form-login" method="post" action="{% url 'accounts:login' %}">
     {% csrf_token %}
-    <div class="boss-wrapper">
         <div class="input-wrapper">
             {% render_field form.username placeholder="Username:" %}
             {% render_field form.password id="password" placeholder="Password:" %}
             <div class="input-icon" id="icon" onclick="togglePassword()">
-                <img width="25px" src="{% static 'images/icons/eye_icon.svg' %}">
+                <img width="25px" src="{% static 'img/eye_icon.svg' %}">
             </div>
             <input id="login-button" class="btn btn-primary" type="submit" value="Login">
         </div>
-    </div>
 
     <div class="auth-buttons">
         <a href="{% url 'social:begin' 'facebook' %}" class="bi bi-facebook btn btn-facebook "
@@ -44,5 +43,6 @@
     </div>
 
 </form>
+    </div>
 
 {% endblock content %} 

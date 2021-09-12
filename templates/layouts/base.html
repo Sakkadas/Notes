@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/notes.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/registration.css' %}" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
 
   </head>
@@ -24,6 +25,10 @@
     {% block content %} {% endblock content %}
   
   {% include 'layouts/footer.html' %}
+
+
+<!-- Local scripts -->
+<script src="{% static 'js/login_helper.js' %}"></script>
 
   </body>
 

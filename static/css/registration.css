@@ -1,0 +1,102 @@
+/*------------Facebook button------------*/
+
+
+.btn-facebook:hover {
+    background: rgba(0, 0, 0, 0);
+    color: #3a7999;
+    box-shadow: inset 0 0 0 3px #3a7999;
+}
+
+/*------------------END-------------------------*/
+
+/*------------ Login ------------*/
+.container-login{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.input-wrapper {
+    margin-top: 30px;
+    margin-left: 35%;
+    box-shadow: rgba(113, 113, 113, 0.15) -5px -5px 11px,
+        rgba(0, 0, 0, 0.15) 5px 5px 11px;
+    border-radius: 20px;
+    width: 400px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper input {
+    background: transparent;
+    border: none;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    text-indent: 20px;
+    color: #B2BECD;
+    font-size: 14px;
+    outline: 0;
+}
+
+.auth-buttons {
+    padding-top: 30px;
+}
+
+.input-icon {
+    padding-right: 35px;
+    padding-left: 10px;
+    width: 30px;
+    margin-right: 15px;
+    border-radius: 40px;
+
+    cursor: pointer;
+    transition: all .4s ease;
+}
+
+.input-icon.selected {
+    align-items: center;
+    background-color: #E8F0FE;
+}
+
+.input-icon {
+    max-width: 100%;
+}
+
+::-webkit-input-placeholder {
+    color: #A8C9E277;
+}
+
+#login-button {
+    width: 30%;
+    padding-right: 30px;
+}
+
+
+.login-bar {
+
+    padding-right: 50px;
+    position: relative;
+}
+
+.form-login {
+    text-align: center;
+    display: block;
+    padding-top: 20%;
+    padding-bottom: 10%;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.bar-greeting {
+    padding-right: 20px;
+    padding-top: 10px;
+}
+
+.tags-indent-wrapper {
+    margin: 5%;
+}
+
+/*------------------END-------------------------*/
