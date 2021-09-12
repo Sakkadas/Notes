@@ -129,7 +129,7 @@ class TaggedNoteListView(NotesListView):
             setattr(self, 'tag', tag)
         else:
             raise Http404('The tag slug wasn\'t found.')
-        queryset = Note.objects.filter(tags=tag)
+        queryset = Note.feature.filter(tags=tag)
         return queryset
 
     def get_context_data(self, *args, **kwargs):
