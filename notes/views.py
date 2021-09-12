@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse_lazy, reverse
 
 from django.views.generic.edit import CreateView, DeleteView, UpdateView, FormMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
@@ -18,7 +19,6 @@ class NotesListView(ListView):
     template_name = 'notes/notes_list.html'
     paginate_by = 6
 
-
     def get_order(self):
         order = self.request.GET.get('order', '-created')
         if order.replace('-', '', 1) == 'created':
@@ -26,7 +26,7 @@ class NotesListView(ListView):
         return '-created'
 
 
-class PersonalNotesList(NotesListView):
+class PersonalNotesList(LoginRequiredMixin, NotesListView):
     template_name = 'notes/personal_notes.html'
     paginate_by = 6
 
@@ -92,7 +92,7 @@ def LikeView(request, slug):
     return HttpResponseRedirect(reverse('notes:note', args=[str(slug)]))
 
 
-class NoteCreateView(CreateView):
+class NoteCreateView(LoginRequiredMixin, CreateView):
     model = Note
     success_url = reverse_lazy('notes:notes')
     form_class = NoteForm
@@ -102,7 +102,7 @@ class NoteCreateView(CreateView):
         return super(NoteCreateView, self).form_valid(form)
 
 
-class NoteUpdateView(UpdateView):
+class NoteUpdateView(LoginRequiredMixin, UpdateView):
     model = Note
     success_url = reverse_lazy('notes:notes')
     form_class = NoteForm
@@ -112,7 +112,7 @@ class NoteUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-class NoteDeleteView(DeleteView):
+class NoteDeleteView(LoginRequiredMixin, DeleteView):
     model = Note
     template_name = 'notes/note_delete.html'
     success_url = reverse_lazy('notes:notes')
