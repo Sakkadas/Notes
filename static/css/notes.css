@@ -58,3 +58,51 @@ a.article-title:hover {
 .account-heading {
     font-size: 2.5rem;
 }
+
+.common-header-section:after {
+    content: '';
+    display: table;
+    clear: both;
+
+}
+
+.user-section-display-outer {
+    float: left;
+}
+
+.date-and-category {
+    float: right;
+}
+
+.thumbnail {
+    width: 160px;
+    height: 160px;
+    float: right;
+    border-radius: 15px 50px;
+    box-shadow: 5px 5px 15px -8px rgb(9, 9, 9);
+}
+
+
+.badge {
+    background-color: #5b80b2;
+}
+
+.links-likes:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.links-likes .source {
+    padding: 3px;
+    float: left;
+}
+
+.links-likes .likes {
+    padding: 3px;
+    float: right;
+}
+
+.tags-indent-wrapper {
+    margin: 5%;
+}
