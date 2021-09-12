@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-
+<div class="container">
 <form method="POST">
     {% csrf_token %}
     {{form.media}}
@@ -10,4 +10,5 @@
     <input class="btn btn-primary" type="submit" value="Create note">
 </form>
 {{article.text|safe}}
+</div>
 {% endblock content %}
