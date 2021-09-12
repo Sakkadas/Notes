@@ -33,7 +33,7 @@
             <div class="col-md-9"><img class="card-img-top" style="width: 400px" src="{{ note.image.url }}"
                                        alt="{{ note.title }}"></div>
             <div class="col-md-7">
-                <p>{{ note.content|safe }}</p>
+                <p>{{ note.text|safe }}</p>
             </div>
             <div class="col-md-7">
 
@@ -146,13 +146,13 @@
 
             var d1 = document.getElementById(id);
             d1.insertAdjacentHTML('afterend',
-                '<form id="newForm" class="form-insert py-2" method="post"> \
+                '<form id="newForm" class="form-insert py-2" method="POST"> \
                           <div class="d-flex justify-content-between"><h2>Reply:</h2><div><button type="button" class="btn btn-outline-secondary" onclick="formExit()"">Close</button></div></div> \
-                          <select name="parent" class="d-none" id="id_parentt"> \
+                          <select name="parent" class="d-none" id="id_parent"> \
                           <option value="' + id + '" selected="' + id + '"></option> \
                 </select> \
                 <label for="id_content">Comment:</label> \
-                <textarea name="content" cols="40" rows="5" class="form-control" required id="id_content"></textarea> \
+                <textarea name="text" cols="40" rows="5" class="form-control" required id="id_content"></textarea> \
                 {% csrf_token %} \
                 <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button> \
               </form>');
