@@ -17,6 +17,14 @@
     color: white;
 }
 
+.bar-greeting {
+    color: #f1f1f1;
+    position: absolute;
+    top: 5%;
+    left: 34%;
+    font-size: 40px;
+
+}
 
 .img-text-centered {
     color: #f1edf5;
@@ -30,3 +38,4 @@
     font-size: 40px;
     float: left;
 }
+
