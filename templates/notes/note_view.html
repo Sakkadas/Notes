@@ -26,12 +26,14 @@
 
     <div class="container">
         <div class="row justify-content-md-center pt-5" style="text-align: center;">
-
             <div class="col-md-7">
                 <h1>{{ note.title }}</h1>
             </div>
-            <div class="col-md-9"><img class="card-img-top" style="width: 400px" src="{{ note.image.url }}"
-                                       alt="{{ note.title }}"></div>
+            {% if note.image %}
+                <div class="col-md-9">
+                    <img class="card-img-top" style="width: 400px" src="{{ note.image.url }}">
+                </div>
+            {% endif %}
         </div>
         <article class="media content-section">
             <div style="text-align: center;">
@@ -119,7 +121,7 @@
                     </ul>
                 {% endif %}
             {% endrecursetree %}
-            </div>
+
 
             <div style="display:block;">
                 <form id="myForm" method="POST">
@@ -132,7 +134,7 @@
         {% else %}
             <a href="{% url 'accounts:login' %}">Login to see the comments</a>
         {% endif %}
-
+    </div>
 
     {#    STOP HERE #}
     <script>
