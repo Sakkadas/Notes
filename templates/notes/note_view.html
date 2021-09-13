@@ -34,7 +34,8 @@
                     <img class="card-img-top" style="width: 400px" src="{{ note.image.url }}">
                 </div>
             {% endif %}
-        </div><br>
+        </div>
+        <br>
         <article class="media content-section">
             <div style="text-align: center;">
                 <img class="rounded-circle article-img" src={{ note.author.profile.image.url }}>
@@ -76,13 +77,13 @@
                 {% endif %}
                 {{ total_likes }} Likes
             </form>
-        </article>
-
         <hr>
-        <!--TAGS-->
-        {% for tag in note.tags.all %}
-            <span class="badge tag-badge ms-1 mb-1" style="color:black; ">{{ tag }}</span>
-        {% endfor %}
+            {% for tag in note.tags.all %}
+                <a href="{% url 'notes:tagged' tag_slug=tag.slug %}">
+                    <span class="badge tag-badge ms-1 mb-1">{{ tag }}</span>
+                </a>
+            {% endfor %}
+        </article>
 
         <br>
         <br>
@@ -93,12 +94,10 @@
             </h2>
         {% endwith %}
 
-
-        {#    Here    #}
         {% if user.is_authenticated %}
             {% load mptt_tags %}
             {% recursetree comments %}
-                <div id="{{ node.id }}" class="my-2 p-2">
+                <div id="{{ node.id }}" class="my-2 p-2" style="background-color: #f2f2f2; width: 80%">
                     <div class="d-flex justify-content-between"><strong>
                         By {{ node.author|title|default_if_none:'Deleted User' }}
                         {% if node.email %}
@@ -108,6 +107,7 @@
                         </strong>
                         {{ node.publish }}
                     </div>
+                    <hr>
                     <div>{{ node.text }}</div>
                     <br>
                     {% if node.level < 3 %}
