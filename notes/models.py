@@ -30,7 +30,7 @@ class Note(models.Model):
     source = models.URLField(blank=True, default='',
                              help_text='If you want, put here your source link')
     anonymous = models.BooleanField(
-        default=False, help_text='Others won\'t see that the note is yours.')
+        default=False, help_text='Others won\'t see your notes.')
     tags = TaggableManager(
         through=UnicodeTaggedItem, blank=True,
         help_text='''Put your tags here in order to help people find interesting issue.

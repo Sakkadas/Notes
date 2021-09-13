@@ -25,6 +25,15 @@ class NotesListView(ListView):
             return order
         return '-created'
 
+    def get_queryset(self):
+        queryset = Note.feature.filter(anonymous=False)
+        if self.request.user.is_authenticated:
+            user = self.request.user
+            personal_queryset = Note.feature.get_personal_notes(user)
+            queryset = queryset | personal_queryset
+        order = self.get_order()
+        return queryset.order_by(order)
+
 
 class PersonalNotesList(LoginRequiredMixin, NotesListView):
     template_name = 'notes/personal_notes.html'
