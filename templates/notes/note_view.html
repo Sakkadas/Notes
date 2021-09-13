@@ -96,25 +96,29 @@
         {#    Here    #}
         {% if user.is_authenticated %}
             {% load mptt_tags %}
-                {% recursetree comments %}
-                    <div id="{{ node.id }}" class="my-2 p-2">
-                        <div class="d-flex justify-content-between"><strong>
-                            By {{ node.author|title|default_if_none:'Deleted User' }}</strong>
-                            <div>{{ node.email }}</div>
-                            {{ node.publish }}
-                        </div>
-                        <div>{{ node.text }}</div>
-                        <br>
-                        {% if node.level < 3 %}
-                            <button class="button btn btn-dark" onclick="myFunction({{ node.id }})">Reply</button>
+            {% recursetree comments %}
+                <div id="{{ node.id }}" class="my-2 p-2">
+                    <div class="d-flex justify-content-between"><strong>
+                        By {{ node.author|title|default_if_none:'Deleted User' }}
+                        {% if node.email %}
+                            | <small
+                                style="font-size: 10px">{{ node.email }}</small></strong>
                         {% endif %}
+                        </strong>
+                        {{ node.publish }}
                     </div>
-                    {% if not node.is_leaf_node %}
-                        <ul class="children">
-                            {{ children }}
-                        </ul>
+                    <div>{{ node.text }}</div>
+                    <br>
+                    {% if node.level < 3 %}
+                        <button class="button btn btn-dark" onclick="myFunction({{ node.id }})">Reply</button>
                     {% endif %}
-                {% endrecursetree %}
+                </div>
+                {% if not node.is_leaf_node %}
+                    <ul class="children">
+                        {{ children }}
+                    </ul>
+                {% endif %}
+            {% endrecursetree %}
             </div>
 
             <div style="display:block;">
