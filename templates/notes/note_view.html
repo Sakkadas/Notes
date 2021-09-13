@@ -92,42 +92,45 @@
             </h2>
         {% endwith %}
 
-        {% load mptt_tags %}
-        <div>
-            {% recursetree comments %}
-                <div id="{{ node.id }}" class="my-2 p-2">
-                    <div class="d-flex justify-content-between"><strong>
-                        By {{ node.author|title|default_if_none:'Deleted User' }}</strong>
-                        <div>{{ node.publish }}</div>
+
+        {#    Here    #}
+        {% if user.is_authenticated %}
+            {% load mptt_tags %}
+                {% recursetree comments %}
+                    <div id="{{ node.id }}" class="my-2 p-2">
+                        <div class="d-flex justify-content-between"><strong>
+                            By {{ node.author|title|default_if_none:'Deleted User' }}</strong>
+                            <div>{{ node.email }}</div>
+                            {{ node.publish }}
+                        </div>
+                        <div>{{ node.text }}</div>
+                        <br>
+                        {% if node.level < 3 %}
+                            <button class="button btn btn-dark" onclick="myFunction({{ node.id }})">Reply</button>
+                        {% endif %}
                     </div>
-                    <div>{{ node.text }}</div>
-                    <br>
-                    {% if node.level < 3 %}
-                        <button class="button btn btn-dark" onclick="myFunction({{ node.id }})">Reply</button>
+                    {% if not node.is_leaf_node %}
+                        <ul class="children">
+                            {{ children }}
+                        </ul>
                     {% endif %}
-                </div>
-                {% if not node.is_leaf_node %}
-                    <ul class="children">
-                        {{ children }}
-                    </ul>
-                {% endif %}
-            {% endrecursetree %}
-        </div>
+                {% endrecursetree %}
+            </div>
 
-        <div style="display:block;">
-            <form id="myForm" method="POST">
-                <h2>Create new comment</h2>
-                {{ comment_form.as_p }}
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
-            </form>
-        </div>
-
-    </div>
-    </div>
-    </div>
+            <div style="display:block;">
+                <form id="myForm" method="POST">
+                    <h2>Create new comment</h2>
+                    {{ comment_form.as_p }}
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+                </form>
+            </div>
+        {% else %}
+            <a href="{% url 'accounts:login' %}">Login to see the comments</a>
+        {% endif %}
 
 
+    {#    STOP HERE #}
     <script>
         function formExit() {
             document.getElementById("newForm").remove();
