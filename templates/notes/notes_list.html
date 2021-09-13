@@ -39,7 +39,9 @@
 
                             <!--- Tags Section -->
                             {% for tag in note.tags.all %}
-                                <span class="badge tag-badge ms-1 mb-1">{{ tag }}</span>
+                                <a href="{% url 'notes:tagged' tag_slug=tag.slug %}">
+                                    <span class="badge tag-badge ms-1 mb-1">{{ tag }}</span>
+                                </a>
                             {% endfor %}
                         </div>
                         <!---------comments-total–---------->

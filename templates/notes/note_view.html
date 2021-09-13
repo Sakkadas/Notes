@@ -34,7 +34,7 @@
                     <img class="card-img-top" style="width: 400px" src="{{ note.image.url }}">
                 </div>
             {% endif %}
-        </div>
+        </div><br>
         <article class="media content-section">
             <div style="text-align: center;">
                 <img class="rounded-circle article-img" src={{ note.author.profile.image.url }}>
@@ -52,7 +52,6 @@
                         </div>
                     {% endif %}
                 </div>
-                <h2 class="article-title">{{ note.title }}</h2>
                 <p class="article-content">{{ note.text | safe }}</p>
             </div>
 

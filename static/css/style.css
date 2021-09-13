@@ -34,6 +34,18 @@ a {
     color: black;
 }
 
+/*-----tags-----*/
 .tag-list .btn {
     border-radius: 25px;
 }
+.tag-badge {
+	background-color: #05386B;
+	opacity: .8;
+}
+.tag-badge:hover {
+	color: white;
+	background-color: #05386B;
+	opacity: 1;
+}
+
+/*---------end--------*/
