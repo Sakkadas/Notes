@@ -18,10 +18,11 @@
                 <legend class="border-bottom mb-4">Profile Info</legend>
                 {{ u_form|crispy }}
                 {{ p_form|crispy }}
-                <a class="btn btn-light" href="{% url 'accounts:password_change' %}">Change Password</a>
+                <hr>
             </fieldset>
             <div class="form-group">
                 <button class="btn btn-primary" type="submit">Update</button>
+                <a class="btn btn-link" style="text-decoration: none" href="{% url 'accounts:password_change' %}">Change Password</a>
             </div>
         </form>
     </div>

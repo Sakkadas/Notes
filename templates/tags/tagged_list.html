@@ -1,4 +1,10 @@
 {% extends 'notes/notes_list.html' %}
 
-
 {% load static %}
+
+{% block taggs %}
+    <br>
+    <div class="container" style="text-align: center">
+        <h1>Notes with tag #{{ tag }}</h1>
+    </div>
+{% endblock taggs %}

@@ -2,78 +2,94 @@
 
 
 {% block content %}
-{% include 'layouts/header.html' %}
-<div class="container" style="padding-top: 30px">
-    {% for note in notes %}
-    <article class="media content-section">
-        <div id="user-section-display">
-            <div class="common-header-section">
-                <div class="user-section-display-outer">
-                    <img class="rounded-circle article-img" src="{{ note.author.profile.image.url }}">
-                    <div class="user-section-display-inner"><i><b><a class="extra-name" class="mr-2">{{ note.author }}
-                    </a></b></i></div>
-                </div>
-                <div class="date-and-category">
-                    <p>{{note.created|date:"j M Y h:m"}}</p>
-                    <i><b>{{note.category}}</b></i>
-                </div>
-            </div>
-        </div>
-        <div class="media-body">
-            <div class="article-metadata">
-                {% if note.image %}
-                <img class="thumbnail" src="{{note.image.url}}">
+    {% include 'layouts/header.html' %}
+    <!---------tagged notes info–---------->
+    {% block taggs %}{% endblock taggs %}
+
+    <!---------Notes–---------->
+    {% if notes %}
+        <div class="container" style="padding-top: 30px">
+            {% for note in notes %}
+                <article class="media content-section">
+                    <div id="user-section-display">
+                        <div class="common-header-section">
+                            <div class="user-section-display-outer">
+                                <img class="rounded-circle article-img" src="{{ note.author.profile.image.url }}">
+                                <div class="user-section-display-inner"><i><b><a class="extra-name"
+                                                                                 class="mr-2">{{ note.author }}
+                                </a></b></i></div>
+                            </div>
+                            <div class="date-and-category">
+                                <p>{{ note.created|date:"j M Y h:m" }}</p>
+                                <i><b>{{ note.category }}</b></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="media-body">
+                        <div class="article-metadata">
+                            {% if note.image %}
+                                <img class="thumbnail" src="{{ note.image.url }}">
+                            {% endif %}
+                            <div class="article-title-top">
+                                <h2><a class="article-title"
+                                       href="{% url 'notes:note' note.slug %}">{{ note.title }}</a>
+                                </h2>
+                            </div>
+                            <p class="article-content">{{ note.text | safe }}</p>
+
+                            <!--- Tags Section -->
+                            {% for tag in note.tags.all %}
+                                <span class="badge tag-badge ms-1 mb-1">{{ tag }}</span>
+                            {% endfor %}
+                        </div>
+                        <!---------comments-total–---------->
+                        <div class="links-likes">
+                            <div class="links-likes source">
+                                {% if note.source %}
+                                    <p>{{ note.source }}</p>
+                                {% endif %}
+                            </div>
+                            <div class="links-likes likes">
+                                {{ note.total_likes }} <i class="bi bi-hand-thumbs-up-fill"
+                                                          style="font-size: 1.5rem; color: cornflowerblue;"></i> Likes
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+
+
+            <!--------------PAGINATION---------------->
+            {% if is_paginated %}
+
+                {% if page_obj.has_previous %}
+                    <a class="btn btn-secondary mb-4" href="?page=1">First</a>
+                    <a class="btn btn-secondary mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
                 {% endif %}
-                <div class="article-title-top">
-                    <h2><a class="article-title" href="{% url 'notes:note' note.slug %}">{{note.title}}</a></h2>
-                </div>
-                <p class="article-content">{{note.text | safe}}</p>
 
-                <!--- Tags Section -->
-                {% for tag in note.tags.all %}
-                <span class="badge tag-badge ms-1 mb-1">{{tag}}</span>
-                {% endfor %}
-            </div>
-            <!---------comments-total–---------->
-            <div class="links-likes">
-                <div class="links-likes source">
-                    {% if note.source %}
-                    <p>{{note.source}}</p>
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <a class="btn btn-secondary mb-4" href="?page={{ num }}">{{ num }}</a>
                     {% endif %}
-                </div>
-                <div class="links-likes likes">
-                    {{note.total_likes}} <i class="bi bi-hand-thumbs-up-fill"
-                                               style="font-size: 1.5rem; color: cornflowerblue;"></i> Likes
-                </div>
-            </div>
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <a class="btn btn-secondary mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    <a class="btn btn-secondary mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                {% endif %}
+
+            {% endif %}
+
         </div>
-    </article>
-    {% endfor %}
-
-
-    <!--------------PAGINATION---------------->
-    {% if is_paginated %}
-
-    {% if page_obj.has_previous %}
-    <a class="btn btn-secondary mb-4" href="?page=1">First</a>
-    <a class="btn btn-secondary mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-    {% endif %}
-
-    {% for num in page_obj.paginator.page_range %}
-    {% if page_obj.number == num %}
-    <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
-    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-    <a class="btn btn-secondary mb-4" href="?page={{ num }}">{{ num }}</a>
-    {% endif %}
-    {% endfor %}
-
-    {% if page_obj.has_next %}
-    <a class="btn btn-secondary mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
-    <a class="btn btn-secondary mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-    {% endif %}
+        <!-- If no notes -->
+    {% else %}
+        <br>
+        <h1 class="mt-6 text-center">
+            <a href="{% url 'notes:create' %}" class="text-decoration-none">Add First Note</a>
+        </h1>
 
     {% endif %}
-
-</div>
 
 {% endblock content %}

@@ -33,3 +33,7 @@ a {
     font-weight: 700;
     color: black;
 }
+
+.tag-list .btn {
+    border-radius: 25px;
+}
