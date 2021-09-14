@@ -6,7 +6,7 @@ class NoteForm(forms.ModelForm):
     class Meta:
         model = Note
         fields = [
-            'title', 'text', 'source', 'summary', 'anonymous', 'tags',
+            'title', 'text', 'image', 'source', 'summary', 'anonymous', 'tags',
         ]
 
 

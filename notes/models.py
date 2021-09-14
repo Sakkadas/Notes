@@ -15,6 +15,7 @@ class NotesManager(models.Manager):
     def get_personal_notes(self, user):
         return self.filter(author=user)
 
+
 class Note(models.Model):
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, editable=False, related_name='author')
     title = models.CharField(max_length=100, null=False, blank=False)
@@ -25,7 +26,7 @@ class Note(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     likes = models.ManyToManyField(User, blank=True)
-    slug = models.SlugField(max_length=255, unique=True,
+    slug = models.SlugField(max_length=255, unique=True, editable=False,
                             db_index=True, verbose_name="Url_slug")
     source = models.URLField(blank=True, default='',
                              help_text='If you want, put here your source link')
@@ -37,12 +38,13 @@ class Note(models.Model):
                     You able to add 5 tags.
                     Length must be less than 25 symbols.''')
 
+    def save(self, *args, **kwargs):
+        value = self.title
+        self.slug = slugify(value, allow_unicode=True)
+        super().save(*args, **kwargs)
+
     def total_likes(self):
         return self.likes.count()
-
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
-        super(Note, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -52,7 +54,7 @@ class Note(models.Model):
 
 class Comment(MPTTModel):
     note = models.ForeignKey(
-    Note, on_delete=models.CASCADE, related_name='comments', null=True, blank=True)
+        Note, on_delete=models.CASCADE, related_name='comments', null=True, blank=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     parent = TreeForeignKey('self', on_delete=models.CASCADE,
                             null=True, blank=True, related_name='children')
