@@ -7,5 +7,5 @@ urlpatterns = [
     path('tags/', include(('tags.urls', 'tags'), namespace='tags')),
     path('', include('notes.urls')),
     path('oauth/', include('social_django.urls', namespace='social')),
-
+    path('notes_api/', include('notes_api.urls')),
 ]
