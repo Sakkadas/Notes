@@ -26,8 +26,10 @@ INSTALLED_APPS = [
     'notes',
     'users',
     'tags',
+    'notes_api',
 
     # THIRD-PARTY APPS
+    'rest_framework',
     'crispy_forms',
     'ckeditor',
     'widget_tweaks',
