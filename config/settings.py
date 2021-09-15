@@ -30,6 +30,7 @@ INSTALLED_APPS = [
 
     # THIRD-PARTY APPS
     'rest_framework',
+    'social_django',
     'crispy_forms',
     'ckeditor',
     'widget_tweaks',
@@ -60,6 +61,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                "social_django.context_processors.backends",
+                "social_django.context_processors.login_redirect",
             ],
         },
     },
@@ -94,12 +97,15 @@ AUTH_PASSWORD_VALIDATORS = [
 # social-auth-app-django
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookOAuth2',
-    'social_core.backends.twitter.TwitterOAuth',
     'social_core.backends.github.GithubOAuth2',
 
     'django.contrib.auth.backends.ModelBackend',
 )
 
+# SOCIAL_AUTH_FACEBOOK_KEY = os.getenv('SOCIAL_AUTH_FACEBOOK_KEY')  # App ID
+# SOCIAL_AUTH_FACEBOOK_SECRET = os.getenv('SOCIAL_AUTH_FACEBOOK_SECRET')  # App secret key
+SOCIAL_AUTH_GITHUB_KEY = os.environ.get("SOCIAL_AUTH_GITHUB_KEY")
+SOCIAL_AUTH_GITHUB_SECRET = os.environ.get("SOCIAL_AUTH_GITHUB_SECRET")
 
 LANGUAGE_CODE = 'en-us'
 

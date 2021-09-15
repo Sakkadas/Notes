@@ -7,6 +7,12 @@
     box-shadow: inset 0 0 0 3px #3a7999;
 }
 
+.btn-github:hover {
+    background: rgba(0, 0, 0, 0);
+    color: black;
+    box-shadow: inset 0 0 0 3px black;
+}
+
 /*------------------END-------------------------*/
 
 /*------------ Login ------------*/

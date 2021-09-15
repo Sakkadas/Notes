@@ -33,9 +33,18 @@
         </div>
 
     <div class="auth-buttons">
+        <div class="facebook-btn">
         <a href="{% url 'social:begin' 'facebook' %}" class="bi bi-facebook btn btn-facebook "
            style="color: #ffffff; background-color: #1877f2; font-size: 20px; border-radius: 10px">
             Login with Facebook</a>
+        </div>
+
+        <div class="github-btn">
+        <a href="{% url 'social:begin' 'github' %}" class="bi bi-github btn btn-github"
+           style="color: black; background-color: gray; font-size: 20px; border-radius: 10px">
+           Login with GitHub</a>
+        </div>
+
         <small class="text-muted">
             <p>Need An Account? <a class="ml-2" href="{% url 'accounts:register' %}">Sign Up Now</a></p>
             <p><a href="{% url 'accounts:password_reset' %}">Forgot Password?</a></p>
