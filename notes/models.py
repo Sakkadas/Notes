@@ -20,7 +20,7 @@ class Note(models.Model):
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, editable=False, related_name='author')
     title = models.CharField(max_length=100, null=False, blank=False)
     text = RichTextField(blank=True, null=True)
-    summary = models.CharField(max_length=100, default='', blank=True,
+    summary = models.CharField(max_length=150, default='', blank=True,
                                help_text='Describe article in nutshell')
     image = models.ImageField(blank=True, upload_to='picture_storage')
     created = models.DateTimeField(auto_now_add=True)

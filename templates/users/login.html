@@ -7,51 +7,53 @@
 {% block content %}
 
 
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
+    {% if form.errors %}
+        <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
 
-{% if next %}
-{% if user.is_authenticated %}
-<p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
-{% else %}
-<p>Please login to see this page.</p>
-{% endif %}
-{% endif %}
+    {% if next %}
+        {% if user.is_authenticated %}
+            <p>Your account doesn't have access to this page. To proceed,
+                please login with an account that has access.</p>
+        {% else %}
+            <p>Please login to see this page.</p>
+        {% endif %}
+    {% endif %}
 
-    <div class="container-login">
-<form class="form-login" method="post" action="{% url 'accounts:login' %}">
-    {% csrf_token %}
-        <div class="input-wrapper">
-            {% render_field form.username placeholder="Username:" %}
-            {% render_field form.password id="password" placeholder="Password:" %}
-            <div class="input-icon" id="icon" onclick="togglePassword()">
-                <img width="25px" src="{% static 'img/eye_icon.svg' %}">
-            </div>
-            <input id="login-button" class="btn btn-primary" type="submit" value="Login">
+    <div style="width: 50%" class="container">
+        <div class="content-section">
+            <form class="form-login" method="post" action="{% url 'accounts:login' %}">
+                {% csrf_token %}
+                <div class="input-wrapper">
+                    {% render_field form.username placeholder="Username:" %}
+                    {% render_field form.password id="password" placeholder="Password:" %}
+                    <div class="input-icon" id="icon" onclick="togglePassword()">
+                        <img width="25px" src="{% static 'img/eye_icon.svg' %}">
+                    </div>
+                    <input id="login-button" class="btn btn-primary" type="submit" value="Login">
+                </div>
+
+                <div class="auth-buttons">
+                    <div class="facebook-btn">
+                        <a href="{% url 'social:begin' 'facebook' %}" class="bi bi-facebook btn btn-facebook "
+                           style="color: #ffffff; background-color: #1877f2; font-size: 20px; border-radius: 10px">
+                            Login with Facebook</a>
+                    </div>
+
+                    <div class="github-btn">
+                        <a href="{% url 'social:begin' 'github' %}" class="bi bi-github btn btn-github"
+                           style="color: black; background-color: gray; font-size: 20px; border-radius: 10px">
+                            Login with GitHub</a>
+                    </div>
+
+                    <small class="text-muted">
+                        <p>Need An Account? <a class="ml-2" href="{% url 'accounts:register' %}">Sign Up Now</a></p>
+                        <p><a href="{% url 'accounts:password_reset' %}">Forgot Password?</a></p>
+                    </small>
+                </div>
+
+            </form>
         </div>
-
-    <div class="auth-buttons">
-        <div class="facebook-btn">
-        <a href="{% url 'social:begin' 'facebook' %}" class="bi bi-facebook btn btn-facebook "
-           style="color: #ffffff; background-color: #1877f2; font-size: 20px; border-radius: 10px">
-            Login with Facebook</a>
-        </div>
-
-        <div class="github-btn">
-        <a href="{% url 'social:begin' 'github' %}" class="bi bi-github btn btn-github"
-           style="color: black; background-color: gray; font-size: 20px; border-radius: 10px">
-           Login with GitHub</a>
-        </div>
-
-        <small class="text-muted">
-            <p>Need An Account? <a class="ml-2" href="{% url 'accounts:register' %}">Sign Up Now</a></p>
-            <p><a href="{% url 'accounts:password_reset' %}">Forgot Password?</a></p>
-        </small>
-    </div>
-
-</form>
     </div>
 
 {% endblock content %} 

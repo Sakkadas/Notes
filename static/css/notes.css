@@ -74,8 +74,8 @@ a.article-title:hover {
 }
 
 .thumbnail {
-    width: 160px;
-    height: 160px;
+    width: 170px;
+    height: 140px;
     float: right;
     border-radius: 15px 50px;
     box-shadow: 5px 5px 15px -8px rgb(9, 9, 9);
