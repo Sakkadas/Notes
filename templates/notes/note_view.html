@@ -38,8 +38,12 @@
         <br>
         <article class="media content-section">
             <div style="text-align: center;">
-                <img class="rounded-circle article-img" src={{ note.author.profile.image.url }}>
-                <div>{{ note.author }}</div>
+                {% if note.author.profile.image.url %}
+                    <img class="rounded-circle article-img" src={{ note.author.profile.image.url }}>
+                {% else %}
+                    <img  class="rounded-circle article-img" src="/media/default.jpg" />
+                {% endif %}
+                <div>{{ note.author|default_if_none:"Deleted User" }}</div>
             </div>
             <div class="media-body">
                 <div class="article-metadata">
@@ -77,7 +81,7 @@
                 {% endif %}
                 {{ total_likes }} Likes
             </form>
-        <hr>
+            <hr>
             {% for tag in note.tags.all %}
                 <a href="{% url 'notes:tagged' tag_slug=tag.slug %}">
                     <span class="badge tag-badge ms-1 mb-1">{{ tag }}</span>
@@ -99,7 +103,8 @@
             {% recursetree comments %}
                 <div id="{{ node.id }}" class="my-2 p-2" style="background-color: #f2f2f2; width: 80%">
                     <div class="d-flex justify-content-between"><strong>
-                    <img class="rounded-circle article-img" style="width: 45px;height: 45px;" src={{ node.author.profile.image.url  }}>
+                        <img class="rounded-circle article-img" style="width: 45px;height: 45px;"
+                             src={{ node.author.profile.image.url }}>
                         By {{ node.author|title|default_if_none:'Deleted User' }}
                         {% if node.email %}
                             | <small

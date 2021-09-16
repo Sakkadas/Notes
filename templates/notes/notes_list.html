@@ -14,9 +14,13 @@
                     <div id="user-section-display">
                         <div class="common-header-section">
                             <div class="user-section-display-outer">
-                                <img class="rounded-circle article-img" src="{{ note.author.profile.image.url }}">
+                                {% if note.author.profile.image.url %}
+                                    <img class="rounded-circle article-img" src="{{ note.author.profile.image.url }}">
+                                {% else %}
+                                    <img class="rounded-circle article-img" src="/media/default.jpg"/>
+                                {% endif %}
                                 <div class="user-section-display-inner"><i><b><a class="extra-name"
-                                                                                 class="mr-2">{{ note.author }}
+                                                                                 class="mr-2">{{ note.author|default_if_none:"Deleted User" }}
                                 </a></b></i></div>
                             </div>
                             <div class="date-and-category">
