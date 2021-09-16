@@ -1,9 +1,10 @@
 # Notes
 This web-service serves in order to take notes store them and share with other people (if you wish ofc)
 
-# Screenshots 
+# Preview 
 
-   <img src="https://s9.gifyu.com/images/notes-gf.gif" align="center"/>
+<img src="project_details/notes-gf.gif" border="10" width = 500 align=center ></a>
+
 
 # Tech stack
 
