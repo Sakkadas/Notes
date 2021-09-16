@@ -99,6 +99,7 @@
             {% recursetree comments %}
                 <div id="{{ node.id }}" class="my-2 p-2" style="background-color: #f2f2f2; width: 80%">
                     <div class="d-flex justify-content-between"><strong>
+                    <img class="rounded-circle article-img" style="width: 45px;height: 45px;" src={{ node.author.profile.image.url  }}>
                         By {{ node.author|title|default_if_none:'Deleted User' }}
                         {% if node.email %}
                             | <small
