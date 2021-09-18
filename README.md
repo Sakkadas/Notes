@@ -1,11 +1,10 @@
 # Notes
 This web-service serves in order to take notes store them and share with other people (if you wish ofc)
 
-# Screenshots 
-<img src="project_details/main.png" border="10" width = 300 align=center ></a>
-<img src="project_details/comment_section.png" border="10" width = 300 align=center ></a>
-<img src="project_details/notes_detail.png" border="10" width = 300 align=center ></a>
-<img src="project_details/notes_single.png" border="10" width = 300 align=center ></a>
+# Preview 
+
+<img src="project_details/notes-gf.gif" border="10" width = 500 align=center ></a>
+
 
 # Tech stack
 
