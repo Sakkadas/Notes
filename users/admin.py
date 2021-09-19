@@ -1,4 +1,10 @@
 from django.contrib import admin
 from .models import Profile
+from notes.models import Comment
 
-admin.site.register(Profile)
+
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ['__str__', 'user',]
+
+
+admin.site.register(Profile, ProfileAdmin)
