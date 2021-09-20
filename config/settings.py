@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'taggit',
     'mptt',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -131,4 +132,4 @@ LOGIN_REDIRECT_URL = ''
 
 # Tags conf
 TAGGIT_CASE_INSENSITIVE = True
-TAGGIT_TAGS_FROM_STRING = 'tags.utils.custom_tag_string' # noqa
+TAGGIT_TAGS_FROM_STRING = 'tags.utils.custom_tag_string'  # noqa

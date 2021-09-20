@@ -3,6 +3,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views import defaults as default_views
+import debug_toolbar
 
 handler400 = 'config.views.bad_request'
 handler403 = 'config.views.permission_denied_view'
@@ -16,6 +17,8 @@ urlpatterns = [
     path('', include('notes.urls')),
     path('oauth/', include('social_django.urls', namespace='social')),
     path('notes_api/', include('notes_api.urls')),
+    path('__debug__/', include(debug_toolbar.urls)),
+
 ]
 
 if settings.DEBUG:
