@@ -1,24 +1,33 @@
-import factory.django
 import pytest
-from django.contrib.auth.models import User
-from factory import Faker
 import factory.fuzzy
-from django.template.defaultfilters import slugify
 from ..models import Note
+from django.template.defaultfilters import slugify
+from django.contrib.auth import get_user_model
+from factory import Faker
+from factory.django import DjangoModelFactory
+
+
+pytestmark = pytest.mark.django_db
+
+class UserFactory(DjangoModelFactory):
+    username = Faker("user_name")
+    email = Faker("email")
+
+    class Meta:
+        model = get_user_model()
+        django_get_or_create = ["username"]
 
 
 class NotesFactory(factory.django.DjangoModelFactory):
-    # author = factory.SubFactory(AuthorFactory)
-    title = factory.LazyAttribute(lambda obj: factory.Faker('title'))
-    # text = factory.fuzzy.FuzzyText()
-    # summary = factory.fuzzy.FuzzyText()
-    # slug = factory.LazyAttribute(lambda obj: slugify(obj.name))
-    # source = factory.LazyAttribute(lambda obj: f"https://{obj.name}")
-
     class Meta:
         model = Note
+    author = factory.SubFactory(UserFactory)
+    title = factory.fuzzy.FuzzyText()
+    text = factory.fuzzy.FuzzyText()
+    summary = factory.fuzzy.FuzzyText()
+    slug = factory.LazyAttribute(lambda obj: slugify(obj.title))
+    tags = 'default'
 
-
-@pytest.fixture
+@pytest.mark.django_db
 def note():
     return NotesFactory()
