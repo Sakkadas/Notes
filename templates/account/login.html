@@ -1,8 +1,11 @@
 {% extends 'layouts/base.html' %}
 
+{% load widget_tweaks %}
+{% load socialaccount %}
+{% load crispy_forms_tags %}
+
 {% load static %}
 
-{% load widget_tweaks %}
 
 {% block content %}
 
@@ -20,35 +23,30 @@
         {% endif %}
     {% endif %}
 
+
     <div style="width: 50%" class="container">
         <div class="content-section">
-            <form class="form-login" method="post" action="{% url 'accounts:login' %}">
+            <form class="form-login" method="post" action="{% url 'accounts_login' %}">
                 {% csrf_token %}
-                <div class="input-wrapper">
-                    {% render_field form.username placeholder="Username:" %}
-                    {% render_field form.password id="password" placeholder="Password:" %}
-                    <div class="input-icon" id="icon" onclick="togglePassword()">
-                        <img width="25px" src="{% static 'img/eye_icon.svg' %}">
-                    </div>
-                    <input id="login-button" class="btn btn-primary" type="submit" value="Login">
-                </div>
-
+                {{ form|crispy }}
+                <input id="login-button" class="btn btn-success" type="submit" value="Login">
                 <div class="auth-buttons">
                     <div class="facebook-btn">
-                        <a href="{% url 'social:begin' 'facebook' %}" class="bi bi-facebook btn btn-facebook "
+                        <a href="{% provider_login_url "facebook" method="oauth2" %}"
+                           class="bi bi-facebook btn btn-facebook "
                            style="color: #ffffff; background-color: #1877f2; font-size: 20px; border-radius: 10px">
                             Login with Facebook</a>
                     </div>
 
                     <div class="github-btn">
-                        <a href="{% url 'social:begin' 'github' %}" class="bi bi-github btn btn-github"
+                        <a href="{% provider_login_url 'github' %}" class="bi bi-github btn btn-github"
                            style="color: black; background-color: gray; font-size: 20px; border-radius: 10px">
                             Login with GitHub</a>
                     </div>
 
                     <small class="text-muted">
-                        <p>Need An Account? <a class="ml-2" href="{% url 'accounts:register' %}">Sign Up Now</a></p>
-                        <p><a href="{% url 'accounts:password_reset' %}">Forgot Password?</a></p>
+                        <p>Need An Account? <a class="ml-2" href="{% url 'account_signup' %}">Sign Up Now</a></p>
+                        <p><a href="{% url 'account_reset_password' %}">Forgot Password?</a></p>
                     </small>
                 </div>
 

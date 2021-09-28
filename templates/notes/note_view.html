@@ -41,7 +41,7 @@
                 {% if note.author.profile.image.url %}
                     <img class="rounded-circle article-img" src={{ note.author.profile.image.url }}>
                 {% else %}
-                    <img  class="rounded-circle article-img" src="/media/default.jpg" />
+                    <img class="rounded-circle article-img" src="/media/default.jpg"/>
                 {% endif %}
                 <div>{{ note.author|default_if_none:"Deleted User" }}</div>
             </div>
@@ -76,7 +76,7 @@
                     {% endif %}
                 {% else %}
                     <small>
-                        <a href="{% url 'accounts:login' %}">Login</a> to like
+                        <a href="{% url 'account_login' %}">Login</a> to like
                     </small>
                 {% endif %}
                 {{ total_likes }} Likes
@@ -105,7 +105,7 @@
                     <div class="d-flex justify-content-between"><strong>
                         <img class="rounded-circle article-img" style="width: 45px;height: 45px;"
                              src={{ node.author.profile.image.url }}>
-                        By {{ node.author|title|default_if_none:'Deleted User' }}
+                        By {{ node.author|default_if_none:"Deleted User"|title }}
                         {% if node.email %}
                             | <small
                                 style="font-size: 10px">{{ node.email }}</small></strong>
@@ -137,7 +137,7 @@
                 </form>
             </div>
         {% else %}
-            <a href="{% url 'accounts:login' %}">Login to see the comments</a>
+            <a href="{% url 'account_login' %}">Login to see the comments</a>
         {% endif %}
     </div>
 

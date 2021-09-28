@@ -12,10 +12,10 @@ handler500 = 'config.views.server_error'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('users.urls')),
+    path('users/', include('users.urls')),
+    path('accounts/', include('allauth.urls')),
     path('tags/', include(('tags.urls', 'tags'), namespace='tags')),
     path('', include('notes.urls')),
-    path('oauth/', include('social_django.urls', namespace='social')),
     path('notes_api/', include('notes_api.urls')),
     path('__debug__/', include(debug_toolbar.urls)),
 
