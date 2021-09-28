@@ -127,7 +127,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # Redirection
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = ''
+LOGIN_REDIRECT_URL = 'notes:notes'
 
 # Tags conf
 TAGGIT_CASE_INSENSITIVE = True
@@ -137,7 +137,7 @@ INTERNAL_IPS = ['127.0.0.1', ]
 
 # <=====django-allauth config=====>
 SITE_ID = 1
-ACCOUNT_LOGOUT_REDIRECT = ''
+ACCOUNT_LOGOUT_REDIRECT = 'notes:notes'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ACCOUNT_SESSION_REMEMBER = True
