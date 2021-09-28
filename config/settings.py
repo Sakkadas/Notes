@@ -139,7 +139,10 @@ INTERNAL_IPS = ['127.0.0.1', ]
 SITE_ID = 1
 ACCOUNT_LOGOUT_REDIRECT = ''
 ACCOUNT_EMAIL_VERIFICATION = 'none'
-
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
