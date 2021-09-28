@@ -2,6 +2,7 @@
 
 {% load widget_tweaks %}
 {% load socialaccount %}
+{% load crispy_forms_tags %}
 
 {% load static %}
 
@@ -22,19 +23,13 @@
         {% endif %}
     {% endif %}
 
+
     <div style="width: 50%" class="container">
         <div class="content-section">
-            <form class="form-login" method="post" action="{% url 'account_login' %}">
+            <form class="form-login" method="post" action="{% url 'accounts_login' %}">
                 {% csrf_token %}
-                <div class="input-wrapper">
-                    {% render_field form.username placeholder="Username:" %}
-                    {% render_field form.password id="password" placeholder="Password:" %}
-                    <div class="input-icon" id="icon" onclick="togglePassword()">
-                        <img width="25px" src="{% static 'img/eye_icon.svg' %}">
-                    </div>
-                    <input id="login-button" class="btn btn-primary" type="submit" value="Login">
-                </div>
-
+                {{ form|crispy }}
+                <input id="login-button" class="btn btn-success" type="submit" value="Login">
                 <div class="auth-buttons">
                     <div class="facebook-btn">
                         <a href="{% provider_login_url "facebook" method="oauth2" %}"
