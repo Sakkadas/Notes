@@ -32,11 +32,11 @@ def profile(request):
         'p_form': p_form
     }
 
-    return render(request, 'users/profile.html', context)
+    return render(request, 'account/profile.html', context)
 
 
 class UserRegisterView(FormView, UserRegisterForm):
-    template_name = 'users/registration.html'
+    template_name = 'account/signup.html'
     form_class = UserRegisterForm
     success_url = reverse_lazy('notes:notes')
 
@@ -55,7 +55,7 @@ class UserRegisterView(FormView, UserRegisterForm):
 
 
 class UserLoginView(LoginView):
-    template_name = 'users/login.html'
+    template_name = 'account/login.html'
     fields = "__all__"
     redirect_authenticated_user = True
 
