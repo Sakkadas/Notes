@@ -8,6 +8,8 @@
 
     <!---------Notes–---------->
     {% if notes %}
+
+        <div class="col-9">
         <div class="container" style="padding-top: 30px">
             {% for note in notes %}
                 <article class="media content-section">
@@ -15,7 +17,8 @@
                         <div class="common-header-section">
                             <div class="user-section-display-outer">
                                 {% if note.author.profile.image.url %}
-                                    <img class="rounded-circle article-img" src="{{ note.author.profile.image.url }}">
+                                    <img class="rounded-circle article-img"
+                                         src="{{ note.author.profile.image.url }}">
                                 {% else %}
                                     <img class="rounded-circle article-img" src="/media/default.jpg"/>
                                 {% endif %}
@@ -61,7 +64,8 @@
                             </div>
                             <div class="links-likes likes">
                                 {{ note.total_likes }} <i class="bi bi-hand-thumbs-up-fill"
-                                                          style="font-size: 1.5rem; color: cornflowerblue;"></i> Likes
+                                                          style="font-size: 1.5rem; color: cornflowerblue;"></i>
+                                Likes
                             </div>
                         </div>
                     </div>
@@ -90,7 +94,6 @@
                 {% endif %}
             {% endif %}
         </div>
-
         <!-- If no notes -->
     {% else %}
         <br>
@@ -99,5 +102,6 @@
         </h1>
 
     {% endif %}
+</div>
 
 {% endblock content %}
