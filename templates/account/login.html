@@ -26,7 +26,7 @@
 
     <div style="width: 50%" class="container">
         <div class="content-section">
-            <form class="form-login" method="post" action="{% url 'accounts_login' %}">
+            <form class="form-login" method="post" action="{% url 'account_login' %}">
                 {% csrf_token %}
                 {{ form|crispy }}
                 <input id="login-button" class="btn btn-success" type="submit" value="Login">
