@@ -15,8 +15,15 @@ class NotesManager(models.Manager):
     def get_personal_notes(self, user):
         return self.filter(author=user)
 
+    def get_queryset(self):
+        return super().get_queryset().filter(status='published')
+
 
 class Note(models.Model):
+    STATUS_CHOICES = (
+        ('draft', 'Draft'),
+        ('published', 'Published'),
+    )
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, editable=False, related_name='author')
     title = models.CharField(max_length=100, null=False, blank=False)
     text = RichTextField(blank=True, null=True)
@@ -32,6 +39,9 @@ class Note(models.Model):
                              help_text='If you want, put here your source link')
     anonymous = models.BooleanField(
         default=False, help_text='Others won\'t see your notes.')
+    status = models.CharField(max_length=10,
+                              choices=STATUS_CHOICES,
+                              default='draft')
     tags = TaggableManager(
         through=UnicodeTaggedItem, blank=True,
         help_text='''Put your tags here in order to help people find interesting issue.
@@ -49,6 +59,7 @@ class Note(models.Model):
     def __str__(self):
         return self.title
 
+    published = NotesManager()
     feature = NotesManager()
 
 
