@@ -2,6 +2,7 @@ from django import forms
 from .models import *
 from mptt.forms import TreeNodeChoiceField
 
+
 class NoteForm(forms.ModelForm):
     class Meta:
         model = Note
@@ -33,3 +34,6 @@ class NewCommentForm(forms.ModelForm):
     def save(self, *args, **kwargs):
         Comment.objects.rebuild()
         return super(NewCommentForm, self).save(*args, **kwargs)
+
+class SearchForm(forms.Form):
+    query = forms.CharField()

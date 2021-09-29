@@ -2,6 +2,8 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse_lazy, reverse
 
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
+
 from django.views.generic.edit import CreateView, DeleteView, UpdateView, FormMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.detail import DetailView
@@ -105,6 +107,7 @@ class NoteCreateView(LoginRequiredMixin, CreateView):
     model = Note
     success_url = reverse_lazy('notes:notes')
     form_class = NoteForm
+    context_object_name = 'note'
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -145,3 +148,23 @@ class TaggedNoteListView(NotesListView):
         context = super().get_context_data(**kwargs)
         context['tag'] = self.tag
         return context
+
+
+def note_search(request):
+    form = SearchForm()
+    query = None
+    results = []
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+        search_vector = SearchVector('title', 'text')
+        search_query = SearchQuery(query)
+        results = Note.published.annotate(
+            search=search_vector,
+            rank=SearchRank(search_vector, search_query)
+        ).filter(search=search_query).order_by('-rank')
+    return render(request, 'notes/search.html',
+                  {'form': form,
+                   'query': query,
+                   'results': results})
