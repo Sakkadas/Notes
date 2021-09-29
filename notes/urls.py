@@ -20,6 +20,7 @@ urlpatterns = [
     path('personal/', PersonalNotesList.as_view(), name='personal'),
     path('tag/<str:tag_slug>/', TaggedNoteListView.as_view(), name='tagged'),
     path("like/<str:slug>/", LikeView, name='like'),
+    path('search/', note_search, name='note_search'),
 ]
 
 if settings.DEBUG:

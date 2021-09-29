@@ -150,8 +150,7 @@ class TaggedNoteListView(NotesListView):
         return context
 
 
-
-def post_search(request):
+def note_search(request):
     form = SearchForm()
     query = None
     results = []
